@@ -1,6 +1,9 @@
 var express = require('express');
 var Twitter = require('twitter');
+var http = require('http');
+var url = require('url');
 var router = express.Router();
+var app = express();
 
 var FCM = require('fcm').FCM;
 
@@ -31,8 +34,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/send',function (req,res){
-  console.log(req.body.statusnum);
-  res.end("query");
+  console.log(req.body);
+  res.end("hello");
 });
 
 router.get('/now',function (req,res){
