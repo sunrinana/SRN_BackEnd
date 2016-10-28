@@ -27,14 +27,28 @@ var client = new Twitter({
 });
 
 var status;
-
+var isWorking = false;
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
 router.post('/send',function (req,res){
-  console.log(req.body);
+  console.log(req.body.statuscode);
+  status = Number(req.body.statuscode);
+  if (status == 1) {
+    client.post('statuses/update', {status: '개발자가 일을 시작했어요!'}, function(error, tweet, response) {
+      if (!error) {
+        console.log(tweet);
+      }
+    });
+  }else if (status == 2){
+    client.post('statuses/update', {status: '개발자가 일을 안해요!'}, function(error, tweet, response) {
+      if (!error) {
+        console.log(tweet);
+      }
+    });
+  }
   res.end("hello");
 });
 
