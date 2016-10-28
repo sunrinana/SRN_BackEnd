@@ -36,18 +36,28 @@ router.get('/', function(req, res, next) {
 router.post('/send',function (req,res){
   console.log(req.body.statuscode);
   status = Number(req.body.statuscode);
-  if (status == 1) {
-    client.post('statuses/update', {status: '개발자가 일을 시작했어요!'}, function(error, tweet, response) {
-      if (!error) {
-        console.log(tweet);
-      }
-    });
-  }else if (status == 2){
-    client.post('statuses/update', {status: '개발자가 일을 안해요!'}, function(error, tweet, response) {
-      if (!error) {
-        console.log(tweet);
-      }
-    });
+  switch (status){
+    case 1:
+        client.post('statuses/update',{status: '개발자가 일안해요!'},function (error,tweet,response) {
+          if (!error){
+            console.log(tweet);
+          }
+        });
+          break;
+    case 2:
+        client.post('statuses/update',{status: '개발자가 일하고 있어요!'},function (error,tweet,response) {
+          if (!error){
+            console.log(tweet);
+          }
+        });
+          break;
+    case 3:
+      client.post('statuses/update',{status: '개발자가 쉰데요!'},function (error,tweet,response) {
+        if (!error){
+          console.log(tweet);
+        }
+      });
+          break;
   }
   res.end("hello");
 });
