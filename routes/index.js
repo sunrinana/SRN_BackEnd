@@ -13,10 +13,14 @@ router.post('/send',function (req,res){
       res.end("query error");
   }
   status = req.body.status;
+  if (status == 2)
+  {
+
+  }
   res.end("query");
 });
 
-router.get('now/',function (req,res){
+router.get('/now',function (req,res){
   res.end(status);
 });
 
