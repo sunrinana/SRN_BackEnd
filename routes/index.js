@@ -5,16 +5,18 @@ var url = require('url');
 var router = express.Router();
 var app = express();
 
-var FCM = require('fcm').FCM;
+var FCM = require('fcm-push');
 
-var apiKey = 'AIzaSyC4pkUBo3rreT7YmdHn0O12bz-TU9_2brI';
+var apiKey = 'AIzaSyDUDq4OA2GwkK8I2DTDa28kXBqGKeQ_cGI';
 var fcm = new FCM(apiKey);
 
 var message = {
-  registration_id: 'Device registration id', // required
-  collapse_key: 'Collapse key',
-  'data.key1': 'value1',
-  'data.key2': 'value2'
+  to : 'cud20fn1J2k:APA91bEMjTTvqcIN40pMpGRWXPtGcWV1NGV2Qbwd_0PjaCPUHN4nzivLS11ddipivsw4tPxdAomrlGkoknbAxZ2cmHJM3VpfwwqSf5uSbellcQf_BT4f5GZpMVBT3IOI09ioCqKMmbnW',
+  collapse_key : 'working!',
+  notification : {
+    title: 'Title of the notification',
+    body: 'Body of the notification'
+  }
 };
 
 
@@ -30,6 +32,13 @@ var status;
 var isWorking = false;
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  fcm.send(message,function (err,res) {
+    if (err){
+      console.log("somthing has gone wrong");
+    }else{
+      console.log("successfully sent with res:",res);
+    }
+  });
   res.render('index', { title: 'Express' });
 });
 
