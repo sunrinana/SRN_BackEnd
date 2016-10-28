@@ -1,5 +1,4 @@
 var express = require('express');
-var http = require('http');
 var Twitter = require('twitter');
 var router = express.Router();
 
@@ -24,36 +23,15 @@ var client = new Twitter({
   access_token_secret: 'EdPLfQ7kAaequp7bVAGR2wTavjMnadj2KBlnZCRLrgaQx'
 });
 
-client.post('statuses/update', {status: 'I am a tweet'}, function(error, tweet, response) {
-  if (!error) {
-    console.log(tweet);
-  }
-});
-
-
 var status;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  client.post('statuses/update', {status: 'I am a tweet'}, function(error, tweet, response) {
-    if (!error) {
-      console.log(tweet);
-    }
-  });
   res.render('index', { title: 'Express' });
 });
 
 router.post('/send',function (req,res){
-  console.log(req.body);
-
-  if (req.body.status==null) {
-      res.end("query error");
-  }
-  status = req.body.status;
-  if (status == 2)
-  {
-
-  }
+  console.log(req.body.statusnum);
   res.end("query");
 });
 
