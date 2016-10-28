@@ -10,6 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/send',function (req,res){
+  console.log(req.body);
   if (req.body.status==null) {
       res.end("query error");
   }
