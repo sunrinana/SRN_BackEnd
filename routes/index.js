@@ -13,9 +13,17 @@ var apiKey = 'AIzaSyD77o7ROigCo1lxzME8i92rR6IMGUvaR7U';
 var to = 'cud20fn1J2k:APA91bEMjTTvqcIN40pMpGRWXPtGcWV1NGV2Qbwd_0PjaCPUHN4nzivLS11ddipivsw4tPxdAomrlGkoknbAxZ2cmHJM3VpfwwqSf5uSbellcQf_BT4f5GZpMVBT3IOI09ioCqKMmbnW';
 var xcs = new Sender('66970132501', apiKey);
 
-var notification = new Notification("ic_launcher")
-    .title("Hello buddy!")
-    .body("node-xcs is awesome.")
+var notification_1 = new Notification("ic_launcher")
+    .title("Working!")
+    .body("개발자가 일안하고있어요!")
+    .build();
+var notification_2 = new Notification("ic_launcher")
+    .title("Working!")
+    .body("개발자가 일하고있어요!")
+    .build();
+var notification_3 = new Notification("ic_launcher")
+    .title("Working!")
+    .body("개발자가 쉰데요")
     .build();
 
 var message = new Message("messageId_1046")
@@ -25,7 +33,25 @@ var message = new Message("messageId_1046")
     .addData("anything_else", false)
     .addData("awesomeness", 100)
     .deliveryReceiptRequested(true)
-    .notification(notification)
+    .notification(notification_1)
+    .build();
+var message_2 = new Message("messageId_1046")
+    .priority("high")
+    .dryRun(false)
+    .addData("node-xcs", true)
+    .addData("anything_else", false)
+    .addData("awesomeness", 100)
+    .deliveryReceiptRequested(true)
+    .notification(notification_2)
+    .build();
+var message_3 = new Message("messageId_1046")
+    .priority("high")
+    .dryRun(false)
+    .addData("node-xcs", true)
+    .addData("anything_else", false)
+    .addData("awesomeness", 100)
+    .deliveryReceiptRequested(true)
+    .notification(notification_3)
     .build();
 
 var client = new Twitter({
@@ -39,13 +65,6 @@ var status;
 var isWorking = false;
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  xcs.sendNoRetry(message, to, function (result) {
-    if (result.getError()) {
-      console.error(result.getErrorDescription());
-    } else {
-      console.log("message sent: #" + result.getMessageId());
-    }
-  });
   res.render('index', { title: 'Express' });
 });
 
@@ -57,6 +76,14 @@ router.post('/send',function (req,res){
         client.post('statuses/update',{status: '개발자가 일안해요!'},function (error,tweet,response) {
           if (!error){
             console.log(tweet);
+          }else{
+            console.log(error);
+          }});
+        xcs.sendNoRetry(message, to, function (result) {
+          if (result.getError()) {
+            console.error(result.getErrorDescription());
+          } else {
+            console.log("message sent: #" + result.getMessageId());
           }
         });
           break;
@@ -66,11 +93,25 @@ router.post('/send',function (req,res){
             console.log(tweet);
           }
         });
+        xcs.sendNoRetry(message_2, to, function (result) {
+          if (result.getError()) {
+            console.error(result.getErrorDescription());
+          } else {
+            console.log("message sent: #" + result.getMessageId());
+          }
+        });
           break;
     case 3:
       client.post('statuses/update',{status: '개발자가 쉰데요!'},function (error,tweet,response) {
         if (!error){
           console.log(tweet);
+        }
+      });
+      xcs.sendNoRetry(message_3, to, function (result) {
+        if (result.getError()) {
+          console.error(result.getErrorDescription());
+        } else {
+          console.log("message sent: #" + result.getMessageId());
         }
       });
           break;
